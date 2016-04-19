@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Know Your Data Structures!</title>
+	<title>Linked List</title>
 
 	<!-- Adding Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
@@ -12,26 +12,42 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<style>
+		.tab {
+			display: inline-block;
+			float: left;
+			border: 1px black solid;
+			padding: 5px 10px 5px 10px;
+			margin: 5px;
+			cursor: pointer;
+		}
+
+		#text {
+			padding: 5px;
+			margin: 5px;
+		}
+	</style>
 </head>
 <body>
 <div class="container">
-	<div class="ds col-md-offset-2 col-md-8">
-		<ul style="list-style-type: none; font-size: 2em;">
-			<hr>
-			<li><a href="./linkedlist.html">Linked List</a></li>
-			<hr>
-			<li><a href="">Stack</a></li>
-			<hr>
-			<li><a href="">Binary Search Tree</a></li>
-			<hr>
-			<li><a href="">AVL Tree</a></li>
-			<hr>
-			<li><a href="">Priority Queues</a></li>
-			<hr>
-			<li><a href="">Graphs</a></li>
-			<hr>
-		</ul>
+	<br>
+	<div class="info col-md-6" style="border: 1px solid black;">
+		<div class="row">
+			<div class="tab" id="about">About</div>
+			<div class="tab" id="costs">Costs</div>
+			<div class="tab" id="applications">Applications</div>
+		</div>
+		<div class="row">
+			<p id="text"></p>
+		</div>
+		
+	</div>
+	<div class="linkedList col-md-6" style="border: 1px solid black;">
+		hey
 	</div>
 </div>
+
+<script src="./scripts/linkedlist.js"></script>
 </body>
 </html>
