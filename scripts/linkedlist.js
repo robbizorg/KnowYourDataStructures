@@ -1,5 +1,31 @@
 var linkedList = function ll() {
-	return;
+	function nodeClass(element, next) {
+		return {
+			element: element,
+			next: next
+		}
+	};
+
+	var head = nodeClass("head", null);
+
+	var insert = function insertF(element) {
+		var temp = head.next;
+		head.next = nodeClass(element, temp);
+	};
+ 
+	var remove = function removeF() {
+		head.next = head.next.next;
+	}
+
+	var print = function printOne() {
+		console.log(head.next);
+	}
+
+	return {
+		insert: insert,
+		print: print,
+		remove: remove
+	}
 };
 
 var about = "Linked Lists are a Data Structure that typically stores data " +
