@@ -24,6 +24,21 @@ var linkedList = function ll() {
 		print(head.next);
 	}
 
+	var getSize = function sizef() {
+		return size;
+	}
+
+	var getElements = function() {
+		var elementArr = [];
+		var currentNode = head.next;
+
+		while (currentNode !== null) {
+			elementArr.push(currentNode.element);
+		}
+
+		return elementArr;
+	}
+
 	// Private Functions
 	var print = function printOne(node) {
 		if (node !== null) {
@@ -32,15 +47,12 @@ var linkedList = function ll() {
 		}
 	}
 
-	var getSize = function sizef() {
-		return size;
-	}
-
 	return {
 		insert: insert,
 		print: printAll,
 		remove: remove,
-		size: getSize
+		size: getSize,
+		getElements: getElements
 	}
 };
 
@@ -81,5 +93,7 @@ applicationsBox.addEventListener("click", function aboutHandler() {
 	}
 });
 
+var list = linkedList();
+var htmlString = "";
 
 
