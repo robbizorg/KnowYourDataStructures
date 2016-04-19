@@ -7,24 +7,40 @@ var linkedList = function ll() {
 	};
 
 	var head = nodeClass("head", null);
+	var size = 0;
 
 	var insert = function insertF(element) {
 		var temp = head.next;
 		head.next = nodeClass(element, temp);
+		size++;
 	};
  
 	var remove = function removeF() {
 		head.next = head.next.next;
+		size--;
 	}
 
-	var print = function printOne() {
-		console.log(head.next);
+	var printAll = function() {
+		print(head.next);
+	}
+
+	// Private Functions
+	var print = function printOne(node) {
+		if (node !== null) {
+			console.log(node.element);	
+			printOne(node.next);		
+		}
+	}
+
+	var getSize = function sizef() {
+		return size;
 	}
 
 	return {
 		insert: insert,
-		print: print,
-		remove: remove
+		print: printAll,
+		remove: remove,
+		size: getSize
 	}
 };
 
