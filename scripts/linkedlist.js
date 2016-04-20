@@ -34,6 +34,7 @@ var linkedList = function ll() {
 
 		while (currentNode !== null) {
 			elementArr.push(currentNode.element);
+			currentNode = currentNode.next;
 		}
 
 		return elementArr;
@@ -95,5 +96,20 @@ applicationsBox.addEventListener("click", function aboutHandler() {
 
 var list = linkedList();
 var htmlString = "";
+
+list.insert("hello");
+list.insert("what's up?");
+list.insert("Something");
+
+var arr = list.getElements();
+
+for (element in arr) {
+	console.log(arr[element]);
+	htmlString += "<div>" + arr[element] + "</div>";
+}
+
+console.log(htmlString);
+var div = document.getElementById("list");
+div.innerHTML = htmlString;
 
 
