@@ -88,28 +88,36 @@ costsBox.addEventListener("click", function aboutHandler() {
 });
 
 applicationsBox.addEventListener("click", function aboutHandler() {
-	if (pState !== "about") {
+	if (pState !== "applications") {
 		pState = "applications";
 		p.innerHTML = applications;
 	}
 });
 
 var list = linkedList();
-var htmlString = "";
 
-list.insert("hello");
-list.insert("what's up?");
-list.insert("Something");
+function appendItem() {
+	var htmlString = "";
+	var arr = list.getElements();
 
-var arr = list.getElements();
+	for (element in arr) {
+		console.log(arr[element]);
+		htmlString += "<div>" + arr[element] + "</div>";
+	}
 
-for (element in arr) {
-	console.log(arr[element]);
-	htmlString += "<div>" + arr[element] + "</div>";
+	console.log(htmlString);
+	var div = document.getElementById("list");
+	div.innerHTML = htmlString;	
 }
 
-console.log(htmlString);
-var div = document.getElementById("list");
-div.innerHTML = htmlString;
+var newNodebtn = document.getElementById("itemBtn");
+
+newNodebtn.addEventListener("click", function newNodeHandler() {
+	var element = document.getElementById("itemText");
+	list.insert(element.value);
+	element.value = "";
+	appendItem();
+});
+
 
 
