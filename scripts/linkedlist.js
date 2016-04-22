@@ -95,8 +95,12 @@ applicationsBox.addEventListener("click", function aboutHandler() {
 });
 
 var list = linkedList();
-
+var svg = d3.select(".linkedList").append('svg')
+		.attr("height", 500)
+		.attr("width", 500);
+		
 function appendItem() {
+
 	var htmlString = "";
 	var arr = list.getElements();
 
