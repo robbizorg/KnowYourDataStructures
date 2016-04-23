@@ -2,7 +2,8 @@
 <html>
 <head>
 	<title>Linked List</title>
-
+	<!-- Adding D3 -->
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<!-- Adding Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -38,16 +39,23 @@
 			<div class="tab" id="costs">Costs</div>
 			<div class="tab" id="applications">Applications</div>
 		</div>
+		<hr>
 		<div class="row">
 			<p id="text"></p>
 		</div>
 		
 	</div>
+
 	<div class="linkedList col-md-6" style="border: 1px solid black;">
-		<div id="list"></div>
+		<br>
+		<div id="listctrl">
+			<input id="itemText" type="text" placeholder="New Node Element"/>
+			<button class="btn" id="itemBtn">New Node</button>
+		</div>
+		<!-- <svg id="list"></svg> -->
 	</div>
 </div>
 
-<script src="./scripts/linkedlist.js"></script>
+<script src="../scripts/linkedlist.js"></script>
 </body>
 </html>
