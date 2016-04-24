@@ -14,11 +14,16 @@ function graph() {
 		nodes.push({"element": element});
 
 		if (source === undefined) {
+      console.log(source);
 			if (nodes.length > 1) {
-				links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)})
+				links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)});
 			}
-
-		}
+		} else {
+      console.log(source);
+      if (nodes.length > 1) {
+        links.push({"source": parseInt(source), "target": (nodes.length - 1)})
+      }
+    }
 	}
 
 	return {
@@ -31,12 +36,12 @@ function graph() {
 var realGraph = graph();
 realGraph.newNode("chris");
 realGraph.newNode("bob");
-realGraph.newNode("tim");
+realGraph.newNode("tim", 0);
 console.log(realGraph.nodes);
 console.log(realGraph.links);
 
 var force = d3.layout.force()
-    .charge(-120)
+    .charge(-200)
     .linkDistance(100)
     .size([400, 400])
     .nodes(realGraph.nodes)
@@ -73,13 +78,15 @@ var svg = d3.select(".linkedList").append('svg')
         .attr("cy", function(d) { return d.y; });
   });
 
-function addNode(element) {
+function addNode(element, source) {
   force.stop();
 
-  if (element !== "") {
-    realGraph.newNode(element);   
+  if (element === "" && source === "") {
+    realGraph.newNode("element");   
+  } else if (source === "") {
+    realGraph.newNode(element);
   } else {
-    realGraph.newNode("anon");
+    realGraph.newNode(element, source)
   }
   
   console.log(realGraph.nodes);
@@ -111,10 +118,6 @@ function addNode(element) {
     .attr("cy", force.nodes()[force.nodes().length - 1].y)
     .call(force.drag);
 
-   console.log(force.nodes());
-   console.log(force.links());
-   console.log(force.nodes()[force.nodes().length - 2]);
-
   force.on("tick", function() {
     d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
@@ -127,5 +130,11 @@ function addNode(element) {
 };
 
 document.getElementById("itemBtn").addEventListener("click", function() {
-  addNode(document.getElementById("itemText").value);
+  var source = document.getElementById("source");
+  if (source.value == "") {
+    addNode(document.getElementById("itemText").value);
+  } else {
+    addNode(document.getElementById("itemText").value, source.value);
+  }
+
 });
