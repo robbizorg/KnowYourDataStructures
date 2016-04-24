@@ -73,10 +73,15 @@ var svg = d3.select(".linkedList").append('svg')
         .attr("cy", function(d) { return d.y; });
   });
 
-setTimeout(function addNode() {
+function addNode(element) {
   force.stop();
 
-  realGraph.newNode("rob");
+  if (element !== "") {
+    realGraph.newNode(element);   
+  } else {
+    realGraph.newNode("anon");
+  }
+  
   console.log(realGraph.nodes);
   console.log(realGraph.nodes[realGraph.nodes.length - 1]);
   console.log(realGraph.links[realGraph.links.length - 1]);
@@ -119,6 +124,8 @@ setTimeout(function addNode() {
     d3.selectAll(".node").attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   });
+};
 
-}, 3000);
-
+document.getElementById("itemBtn").addEventListener("click", function() {
+  addNode(document.getElementById("itemText").value);
+});
