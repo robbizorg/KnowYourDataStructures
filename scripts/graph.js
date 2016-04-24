@@ -73,3 +73,52 @@ var svg = d3.select(".linkedList").append('svg')
         .attr("cy", function(d) { return d.y; });
   });
 
+setTimeout(function addNode() {
+  force.stop();
+
+  realGraph.newNode("rob");
+  console.log(realGraph.nodes);
+  console.log(realGraph.nodes[realGraph.nodes.length - 1]);
+  console.log(realGraph.links[realGraph.links.length - 1]);
+
+  force.nodes(realGraph.nodes);
+  force.links(realGraph.links);
+
+  force.charge(-120)
+    .linkDistance(100).start();
+
+  console.log(force.nodes());
+
+  link
+    .data(realGraph.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke", "black")
+      .style("stroke-width", 1)
+
+  node
+    .data(realGraph.nodes)
+    .enter().append("circle")
+    .attr("class", "node")
+    .attr("r", 25)
+    .style("fill", "black")
+    .attr("cx", force.nodes()[force.nodes().length - 1].x)
+    .attr("cy", force.nodes()[force.nodes().length - 1].y)
+    .call(force.drag);
+
+   console.log(force.nodes());
+   console.log(force.links());
+   console.log(force.nodes()[force.nodes().length - 2]);
+
+  force.on("tick", function() {
+    d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    d3.selectAll(".node").attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+
+}, 3000);
+
