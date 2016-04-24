@@ -56,16 +56,13 @@ var svg = d3.select(".linkedList").append('svg')
   	.data(realGraph.links)
     .enter().append("line")
       .attr("class", "link")
-      .style("stroke", "black")
-      .style("stroke-width", 1);
 
   var node = svg.selectAll(".node")
   	.data(realGraph.nodes)
     .enter().append("circle")
       .attr("class", "node")
-      .attr("r", 25)
+      .attr("r", 10)
       //.style("fill", function(d) { return color(d.group); })
-      .style("fill", "black")
       .call(force.drag);
 
   force.on("tick", function() {
@@ -103,17 +100,14 @@ function addNode(element, source) {
 
   link
     .data(realGraph.links)
-    .enter().append("line")
+    .enter().insert("line", ":first-child")
       .attr("class", "link")
-      .style("stroke", "black")
-      .style("stroke-width", 1)
 
   node
     .data(realGraph.nodes)
     .enter().append("circle")
     .attr("class", "node")
-    .attr("r", 25)
-    .style("fill", "black")
+    .attr("r", 10)
     .attr("cx", force.nodes()[force.nodes().length - 1].x)
     .attr("cy", force.nodes()[force.nodes().length - 1].y)
     .call(force.drag);
