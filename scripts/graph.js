@@ -15,7 +15,7 @@ function graph() {
 
 		if (source === undefined) {
 			if (nodes.length > 1) {
-				links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)});
+				//links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)});
 			}
 		} else {
       if (nodes.length > 1) {
