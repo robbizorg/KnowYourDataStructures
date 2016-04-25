@@ -46,8 +46,8 @@ function graph() {
           }
         }
 
+        // DELETING ACTS VERY VERY STANGELY
         nodes.splice(index, 1);
-
       }
     }
   }
@@ -63,9 +63,7 @@ function graph() {
 }
 
 var realGraph = graph();
-realGraph.newNode("chris");
-realGraph.newNode("bob");
-realGraph.newNode("tim", 0);
+realGraph.newNode("HEAD");
 console.log(realGraph.nodes);
 console.log(realGraph.links);
 
@@ -98,7 +96,7 @@ var svg = d3.select(".linkedList").append('svg')
   node.append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d.index; });
+      .text(function(d) { return d.element + "/" + d.index; });
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -113,8 +111,6 @@ var svg = d3.select(".linkedList").append('svg')
 function addNode(element, source) {
   force.stop();
   
-  // NEED TO WORK ON OPTIMIZING THE SVG
-  //svg.selectAll("*").remove();
 
   if (element === "" && source === "") {
     realGraph.newNode("element");   
@@ -153,7 +149,7 @@ function addNode(element, source) {
     .append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { console.log(d); return d.index; });
+      .text(function(d) { console.log(d); return d.element + "/" + d.index;});
     
 
   force.on("tick", function() {
