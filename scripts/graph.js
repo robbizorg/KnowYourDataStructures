@@ -24,12 +24,23 @@ function graph() {
         links.push({"source": parseInt(source), "target": (nodes.length - 1)})
       }
     }
-	}
+
+  }
+  
+  function addLink(source, target) {
+    if (source === undefined || target === undefined) {
+      return undefined;
+    } else {
+      links.push({"source": parseInt(source), "target": parseInt(target)});
+    }
+  }
+	
 
 	return {
 		nodes: nodes,
 		links: links,
-		newNode: newNode
+		newNode: newNode,
+    addLink: addLink
 	}
 }
 
@@ -41,7 +52,7 @@ console.log(realGraph.nodes);
 console.log(realGraph.links);
 
 var force = d3.layout.force()
-    .charge(-200)
+    .charge(-100)
     .linkDistance(100)
     .size([400, 400])
     .nodes(realGraph.nodes)
@@ -93,7 +104,7 @@ function addNode(element, source) {
   force.nodes(realGraph.nodes);
   force.links(realGraph.links);
 
-  force.charge(-120)
+  force.charge(-100)
     .linkDistance(100).start();
 
   console.log(force.nodes());
@@ -123,6 +134,37 @@ function addNode(element, source) {
   });
 };
 
+function newLink(source, target) {
+  force.stop();
+
+  if (target === "" || source === "") {
+    return undefined;  
+  } else {
+    realGraph.addLink(source, target);
+  }
+  
+  force.links(realGraph.links);
+
+  force.start();
+
+  console.log(force.links());
+
+  link
+    .data(realGraph.links)
+    .enter().insert("line", ":first-child")
+      .attr("class", "link");  
+
+  force.on("tick", function() {
+    d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    d3.selectAll(".node").attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+}
+
 document.getElementById("itemBtn").addEventListener("click", function() {
   var source = document.getElementById("source");
   if (source.value == "") {
@@ -130,5 +172,12 @@ document.getElementById("itemBtn").addEventListener("click", function() {
   } else {
     addNode(document.getElementById("itemText").value, source.value);
   }
+});
 
+document.getElementById("linkBtn").addEventListener("click", function() {
+  var source = document.getElementById("source1");
+  var target = document.getElementById("target1");
+  if (source.value != "" && target.value != "") {
+    newLink(source.value, target.value);
+  }
 });

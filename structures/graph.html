@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Linked List</title>
+	<title>Graph</title>
 	<!-- Adding D3 -->
 	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	<!-- Adding Bootstrap -->
@@ -61,9 +61,16 @@
 	<div class="linkedList col-md-6" style="border: 1px solid black;">
 		<br>
 		<div id="listctrl">
-			<input id="itemText" type="text" placeholder="New Node Element"/>
-			<input id="source" type="text" placeholder="Node Source">
-			<button class="btn" id="itemBtn">New Node</button>
+			<div class="row">
+				<input id="itemText" type="text" placeholder="New Node Element"/>
+				<input id="source" type="text" placeholder="Node Source">
+				<button class="btn" id="itemBtn">New Node</button>
+			</div>
+			<div class="row">
+				<input id="source1" type="text" placeholder="Source">
+				<input id="target1" type="text" placeholder="Target">
+				<button class="btn" id="linkBtn">New Link</button>
+			</div>
 		</div>
 		<!-- <svg id="list"></svg> -->
 	</div>
