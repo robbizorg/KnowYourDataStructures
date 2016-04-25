@@ -14,12 +14,10 @@ function graph() {
 		nodes.push({"element": element});
 
 		if (source === undefined) {
-      console.log(source);
 			if (nodes.length > 1) {
 				links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)});
 			}
 		} else {
-      console.log(source);
       if (nodes.length > 1) {
         links.push({"source": parseInt(source), "target": (nodes.length - 1)})
       }
@@ -34,13 +32,33 @@ function graph() {
       links.push({"source": parseInt(source), "target": parseInt(target)});
     }
   }
+
+  function remove(source) {
+    if (source === undefined || source === "") {
+      console.err("REMOVE ERR: No source provided")
+    } else {
+      var index = parseInt(source);
+      if (index > -1) {
+        for (var link = 0; link < links.length; link++) {
+          if (links[link].source.index == index || links[link].target.index == index) {
+            links.splice(link, 1);
+            link--;
+          }
+        }
+
+        nodes.splice(index, 1);
+
+      }
+    }
+  }
 	
 
 	return {
 		nodes: nodes,
 		links: links,
 		newNode: newNode,
-    addLink: addLink
+    addLink: addLink,
+    remove: remove
 	}
 }
 
@@ -161,12 +179,33 @@ function newLink(source, target) {
 
   force.start();
 
-  console.log(force.links());
-
   svg.selectAll('.link')
     .data(realGraph.links)
     .enter().insert("line", ":first-child")
       .attr("class", "link");  
+
+  force.on("tick", function() {
+    d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  });
+}
+
+function remove(source) {
+  force.stop();
+  realGraph.remove(source);
+  
+
+  force.links(realGraph.links);
+  force.nodes(realGraph.nodes);
+
+  force.start();
+
+  svg.selectAll('.link').data(realGraph.links).exit().remove();
+  svg.selectAll('.node').data(realGraph.nodes).exit().remove();
 
   force.on("tick", function() {
     d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
@@ -194,3 +233,12 @@ document.getElementById("linkBtn").addEventListener("click", function() {
     newLink(source.value, target.value);
   }
 });
+
+document.getElementById("removeBtn").addEventListener("click", function() {
+  var removeVal = document.getElementById("remove");
+  if (removeVal.value != "") {
+    remove(removeVal.value);
+  }
+})
+
+
