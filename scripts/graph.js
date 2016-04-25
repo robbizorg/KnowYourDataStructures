@@ -52,8 +52,8 @@ console.log(realGraph.nodes);
 console.log(realGraph.links);
 
 var force = d3.layout.force()
-    .charge(-100)
-    .linkDistance(100)
+    .charge(-200)
+    .linkDistance(150)
     .size([400, 400])
     .nodes(realGraph.nodes)
     .links(realGraph.links)
@@ -94,6 +94,9 @@ var svg = d3.select(".linkedList").append('svg')
 
 function addNode(element, source) {
   force.stop();
+  
+  // NEED TO WORK ON OPTIMIZING THE SVG
+  //svg.selectAll("*").remove();
 
   if (element === "" && source === "") {
     realGraph.newNode("element");   
@@ -110,24 +113,25 @@ function addNode(element, source) {
   force.nodes(realGraph.nodes);
   force.links(realGraph.links);
 
-  force.charge(-100)
-    .linkDistance(100).start();
+  force.charge(-200)
+    .linkDistance(150).start();
 
   console.log(force.nodes());
 
-  link
+  svg.selectAll('.link')
     .data(realGraph.links)
-    .enter().insert("line", ":first-child")
+     .enter().insert("line", ":first-child")
       .attr("class", "link")
 
-  node
+  svg.selectAll('.node')
     .data(realGraph.nodes)
     .enter().append("g")
     .attr("class", "node")
     .call(force.drag)
+  d3.select(d3.selectAll(".node")[0].pop())
     .append("circle")
-    .attr("r", 10)
-  d3.selectAll('.node')
+    .attr("r", 10);
+  d3.select(d3.selectAll(".node")[0].pop())
     .append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
@@ -159,7 +163,7 @@ function newLink(source, target) {
 
   console.log(force.links());
 
-  link
+  svg.selectAll('.link')
     .data(realGraph.links)
     .enter().insert("line", ":first-child")
       .attr("class", "link");  
