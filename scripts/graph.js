@@ -69,12 +69,18 @@ var svg = d3.select(".linkedList").append('svg')
       .attr("class", "link")
 
   var node = svg.selectAll(".node")
-  	.data(realGraph.nodes)
-    .enter().append("circle")
+      .data(realGraph.nodes)
+    .enter().append("g")
       .attr("class", "node")
-      .attr("r", 10)
-      //.style("fill", function(d) { return color(d.group); })
       .call(force.drag);
+
+  node.append("circle")
+    .attr('r', 10);
+
+  node.append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.index; });
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -82,8 +88,8 @@ var svg = d3.select(".linkedList").append('svg')
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
   });
 
 function addNode(element, source) {
@@ -116,12 +122,17 @@ function addNode(element, source) {
 
   node
     .data(realGraph.nodes)
-    .enter().append("circle")
+    .enter().append("g")
     .attr("class", "node")
+    .call(force.drag)
+    .append("circle")
     .attr("r", 10)
-    .attr("cx", force.nodes()[force.nodes().length - 1].x)
-    .attr("cy", force.nodes()[force.nodes().length - 1].y)
-    .call(force.drag);
+  d3.selectAll('.node')
+    .append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { console.log(d); return d.index; });
+    
 
   force.on("tick", function() {
     d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
@@ -129,8 +140,7 @@ function addNode(element, source) {
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    d3.selectAll(".node").attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+    d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
 };
 
@@ -160,8 +170,7 @@ function newLink(source, target) {
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
-    d3.selectAll(".node").attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+    d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
 }
 
