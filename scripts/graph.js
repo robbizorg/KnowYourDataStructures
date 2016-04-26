@@ -51,6 +51,19 @@ function graph() {
       }
     }
   }
+
+  // Graph Algorithms
+  function dijkstras() {
+
+  }
+
+  function topSort() {
+
+  }
+
+  function mst() {
+
+  }
 	
 
 	return {
@@ -235,6 +248,23 @@ document.getElementById("removeBtn").addEventListener("click", function() {
   if (removeVal.value != "") {
     remove(removeVal.value);
   }
-})
+});
+
+
+// HTML TEXT
+var about = "Of all the data structures, graphs are my favorite. Disregarding the mathematical " +
+ "rabbit holes that you can find yourself in when you're studying graphs, they can be used to represent " +
+ "a wide range of data. Common things one could want to preform on graphs would be finding the shortest path " +
+ "from one vertex to another, finding a way to traverse the graph by first visiting all prerequisites, and tons " +
+ "of other stuff.</p><br><p> In short, graphs are awesome.";
+
+var applications = "A graph can be used to store data, show connections between data, and " +
+  "lots of other things."; 
+
+var costs = "Costs of graphs, unlike data structures, do not rely on N elements, but instead " +
+"on two sets of elments. V is the set of all Vectors in the graph, and E is the set of all Edges. " +
+"It's important to know the difference between the two. The math works out such that |E| (Magnitude of Set E, " +
+"a.k.a. the number of edges in the set E) can end up resulting in either costs of O(|V|) or O(|V|<sup>2</sup>).";
+
 
 
