@@ -11,7 +11,7 @@ function graph() {
 	var links = [];
 
 	function newNode(element, source) {
-		nodes.push({"element": element});
+		nodes.push({"element": element, "adjList": []});
 
 		if (source === undefined) {
 			if (nodes.length > 1) {
