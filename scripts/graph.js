@@ -268,5 +268,7 @@ var costs = "Costs of graphs, unlike data structures, do not rely on N elements,
 "It's important to know the difference between the two. The math works out such that |E| (Magnitude of Set E, " +
 "a.k.a. the number of edges in the set E) can end up resulting in either costs of O(|V|) or O(|V|<sup>2</sup>).";
 
+var algorithms = "Dijkstras, Topological Sort, Minimum Spanning Trees";
+
 
 
