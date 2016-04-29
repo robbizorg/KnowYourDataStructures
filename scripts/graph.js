@@ -9,6 +9,7 @@ function edge(svg, source, target) {
 function graph() {
 	var nodes = [];
 	var links = [];
+  var weighted = true;
 
 	function newNode(element, source) {
 		nodes.push({"element": element, "adjList": []});
@@ -19,7 +20,8 @@ function graph() {
 			}
 		} else {
       if (nodes.length > 1) {
-        links.push({"source": parseInt(source), "target": (nodes.length - 1)})
+        if (weighted)
+          links.push({"source": parseInt(source), "target": (nodes.length - 1), "weight": 0});
       }
     }
 
@@ -35,7 +37,7 @@ function graph() {
 
   function remove(source) {
     if (source === undefined || source === "") {
-      console.err("REMOVE ERR: No source provided")
+      console.err("REMOVE ERR: No source provided");
     } else {
       var index = parseInt(source);
       if (index > -1) {
