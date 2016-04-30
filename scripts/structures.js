@@ -197,7 +197,7 @@ function graph() {
   var weighted = true;
 
 	function newNode(element, source) {
-		nodes.push({"element": element, "adjList": []});
+		nodes.push({"element": element, "adjList": [], dist: -1});
 
 		if (source === undefined) {
 			if (nodes.length > 1) {
@@ -205,8 +205,13 @@ function graph() {
 			}
 		} else {
       if (nodes.length > 1) {
-        if (weighted)
+        if (weighted) {
           links.push({"source": parseInt(source), "target": (nodes.length - 1), "weight": 0});
+        } else {
+        	var link = {"source": parseInt(source), "target": (nodes.length - 1)};
+      		links.push(link);
+      		nodes[link.source].adjList.push(link.target);
+      	}
       }
     }
 
