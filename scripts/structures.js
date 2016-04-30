@@ -85,29 +85,111 @@ function doublyLinkedList() {
 		size++;
 	}
  
-	var remove = function removeF() {
+	var removeFirst = function removeF() {
+		var temp = head.next;
 		head.next = head.next.next;
+		head.next.prev = head;
 		size--;
+		return temp.element;
+	}
+
+	var removeLast = function removeLast() {
+		var temp = tail.prev;
+		tail.prev = tail.prev.prev;
+		tail.prev.next = tail;
+		size--;
+		return temp.element;
 	}
 
 	var printAll = function() {
 		print(head.next);
+		console.log(" ");
 	}
 
 	var print = function printOne(node) {
-		if (node !== null) {
-			console.log(node.element);	
+		if (node.next !== null) {
+			console.log("CHECKING NODE");
+			console.log(node.element);
+			console.log(node.next);
+			console.log(node.prev);	
+			console.log("===========")
 			printOne(node.next);		
 		}
 	}
 
+	var peek = function p() {
+		return tail.prev.element;
+	}
+
 	return {
 		insertFront: insertFront,
-		insertBack: insertBack,
-		printAll: printAll
+		insertLast: insertBack,
+		printAll: printAll,
+		removeFirst: removeFirst,
+		removeLast: removeLast,
+		size: size,
+		peek: peek
 	}
 
 }
+
+/* Example Doubly Linked List when needed
+function exampleDD() {
+	var dd = doublyLinkedList();
+	dd.insertFront("1");
+	dd.insertFront("2");
+	dd.insertFront("3");
+	dd.insertFront("4");
+	dd.insertFront("5");
+
+	dd.removeLast();
+	console.log(dd.size);
+	dd.printAll();
+}
+*/
+
+function queue() {
+	var dl = doublyLinkedList();
+
+	function enqueue(element) {
+		dl.insertFront(element);
+	}
+
+	function dequeue() {
+		return dl.removeLast();
+	}
+
+	function peek() {
+		return dl.peek();
+	}
+
+	return {
+		enqueue: enqueue,
+		dequeue: dequeue,
+		peek: peek,
+		size: dl.size
+	}
+}
+
+/* Example Queue as Needed
+function exampleQ() {
+	var q = queue();
+
+	q.enqueue("Hello!");
+	q.enqueue("Goodbye");
+	q.enqueue("I will be the last to come off!");
+	q.enqueue("I will not come off");
+
+	q.dequeue();
+	q.dequeue();
+	q.dequeue();
+	console.log(q.peek());
+
+	q.enqueue("I just was enqueued and pushed it off!");
+	q.dequeue();
+	console.log(q.peek());
+}
+*/
 
 function graph() {
 	var nodes = [];
