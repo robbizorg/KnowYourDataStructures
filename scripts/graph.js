@@ -6,76 +6,6 @@ function edge(svg, source, target) {
 
 }
 
-function graph() {
-	var nodes = [];
-	var links = [];
-  var weighted = true;
-
-	function newNode(element, source) {
-		nodes.push({"element": element, "adjList": []});
-
-		if (source === undefined) {
-			if (nodes.length > 1) {
-				//links.push({"source": (nodes.length - 2) , "target": (nodes.length - 1)});
-			}
-		} else {
-      if (nodes.length > 1) {
-        if (weighted)
-          links.push({"source": parseInt(source), "target": (nodes.length - 1), "weight": 0});
-      }
-    }
-
-  }
-  
-  function addLink(source, target) {
-    if (source === undefined || target === undefined) {
-      return undefined;
-    } else {
-      links.push({"source": parseInt(source), "target": parseInt(target)});
-    }
-  }
-
-  function remove(source) {
-    if (source === undefined || source === "") {
-      console.err("REMOVE ERR: No source provided");
-    } else {
-      var index = parseInt(source);
-      if (index > -1) {
-        for (var link = 0; link < links.length; link++) {
-          if (links[link].source.index == index || links[link].target.index == index) {
-            links.splice(link, 1);
-            link--;
-          }
-        }
-
-        // DELETING ACTS VERY VERY STANGELY
-        nodes.splice(index, 1);
-      }
-    }
-  }
-
-  // Graph Algorithms
-  function dijkstras() {
-
-  }
-
-  function topSort() {
-
-  }
-
-  function mst() {
-
-  }
-	
-
-	return {
-		nodes: nodes,
-		links: links,
-		newNode: newNode,
-    addLink: addLink,
-    remove: remove
-	}
-}
 
 var realGraph = graph();
 realGraph.newNode("HEAD");
@@ -151,6 +81,7 @@ function addNode(element, source) {
     .data(realGraph.links)
      .enter().insert("line", ":first-child")
       .attr("class", "link")
+
 
   svg.selectAll('.node')
     .data(realGraph.nodes)
