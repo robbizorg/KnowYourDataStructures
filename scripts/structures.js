@@ -197,7 +197,8 @@ function graph() {
 	var weighted = false;
 
 	function newNode(element, source) {
-		nodes.push({"element": element, "adjList": [], dist: -1, known: false, path: null, idx: nodes.length});
+		var node = {"element": element, "adjList": [], dist: -1, known: false, path: null, idx: nodes.length};
+		nodes.push(node);
 
 		if (source === undefined) {
 			if (nodes.length > 1) {
@@ -208,7 +209,17 @@ function graph() {
         if (weighted) {
           links.push({"source": parseInt(source), "target": (nodes.length - 1), "weight": 0});
         } else {
-        	var link = {"source": parseInt(source), "target": (nodes.length - 1)};
+        	// DOES NOT MATCH UP WITH HOW D3 IS DELETING NODES
+        	var realSource = -1;
+        	for (node in nodes) {
+        		if (nodes[node].idx == source) {
+        			realSource = node;
+        			break;
+        		} 
+        	}
+        	if (realSource < 0)
+        		return;
+        	var link = {"source": parseInt(realSource), "target": (nodes.length - 1)};
       		links.push(link);
       		nodes[link.source].adjList.push(link.target);
       	}
@@ -251,7 +262,12 @@ function graph() {
         	}
         }
 
+        for (node in nodes)
+        	console.log(nodes[node].idx + " " + node);
         nodes.splice(index, 1);
+
+        for (node in nodes)
+        	console.log(nodes[node].idx + " " + node);
       }
     }
   }

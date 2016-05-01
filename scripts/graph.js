@@ -39,7 +39,7 @@ var svg = d3.select(".linkedList").append('svg')
   node.append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d.element + "/" + d.index; });
+      .text(function(d) { return d.index + "/" + d.idx; });
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -77,7 +77,7 @@ function addNode(element, source) {
 
 
   svg.selectAll('.node')
-    .data(realGraph.nodes)
+    .data(realGraph.nodes, function(d) {return d.idx}) //bandMates, function(d){return d.name;}
     .enter().append("g")
     .attr("class", "node")
     .call(force.drag)
@@ -88,7 +88,7 @@ function addNode(element, source) {
     .append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d.element + "/" + d.idx;});
+      .text(function(d) { return d.index + "/" + d.idx;});
     
 
   force.on("tick", function() {
@@ -115,7 +115,7 @@ function newLink(source, target) {
   force.start();
 
   svg.selectAll('.link')
-    .data(realGraph.links)
+    .data(realGraph.links) 
     .enter().insert("line", ":first-child")
       .attr("class", "link");  
 
@@ -140,7 +140,7 @@ function remove(source) {
   force.start();
 
   svg.selectAll('.link').data(realGraph.links).exit().remove();
-  svg.selectAll('.node').data(realGraph.nodes).exit().remove();
+  svg.selectAll('.node').data(realGraph.nodes, function(d) {return d.idx}).exit().remove();
 
   force.on("tick", function() {
     d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
