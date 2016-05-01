@@ -243,9 +243,19 @@ function graph() {
       console.err("REMOVE ERR: No source provided");
     } else {
       var index = parseInt(source);
-      if (index > -1) {
+      var realIdx = -1;
+
+      // Find the Actual Node Index
+      for (node in nodes) {
+      	if (nodes[node].idx == index)
+      		realIdx = parseInt(node);
+      }
+      if (realIdx < 0)
+      	return;
+
+      if (realIdx > -1) {
         for (var link = 0; link < links.length; link++) {
-          if (links[link].source.index == index || links[link].target.index == index) {
+          if (links[link].source.index == realIdx || links[link].target.index == realIdx) {
             links.splice(link, 1);
             link--;
           }
@@ -254,7 +264,7 @@ function graph() {
         // DELETING ACTS VERY VERY STANGELY
         for (node in nodes) {
         	for (nd in nodes[node].adjList) {
-        		if (nodes[node].adjList[nd] == index) {
+        		if (nodes[node].adjList[nd] == realIdx) {
         			console.log(nodes[node].adjList);
         			nodes[node].adjList.splice(nd, 1);
         			console.log(nodes[node].adjList);
@@ -264,7 +274,7 @@ function graph() {
 
         for (node in nodes)
         	console.log(nodes[node].idx + " " + node);
-        nodes.splice(index, 1);
+        nodes.splice(realIdx, 1);
 
         for (node in nodes)
         	console.log(nodes[node].idx + " " + node);
