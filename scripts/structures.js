@@ -194,10 +194,10 @@ function exampleQ() {
 function graph() {
 	var nodes = [];
 	var links = [];
-  var weighted = true;
+	var weighted = false;
 
 	function newNode(element, source) {
-		nodes.push({"element": element, "adjList": [], dist: -1});
+		nodes.push({"element": element, "adjList": [], dist: -1, known: false, path: null, idx: nodes.length});
 
 		if (source === undefined) {
 			if (nodes.length > 1) {
@@ -221,7 +221,9 @@ function graph() {
     if (source === undefined || target === undefined) {
       return undefined;
     } else {
-      links.push({"source": parseInt(source), "target": parseInt(target)});
+    	var link = {"source": parseInt(source), "target": parseInt(target)};
+     	links.push(link);
+     	nodes[link.source].adjList.push(link.target);
     }
   }
 
@@ -239,6 +241,16 @@ function graph() {
         }
 
         // DELETING ACTS VERY VERY STANGELY
+        for (node in nodes) {
+        	for (nd in nodes[node].adjList) {
+        		if (nodes[node].adjList[nd] == index) {
+        			console.log(nodes[node].adjList);
+        			nodes[node].adjList.splice(nd, 1);
+        			console.log(nodes[node].adjList);
+        		}
+        	}
+        }
+
         nodes.splice(index, 1);
       }
     }

@@ -9,8 +9,6 @@ function edge(svg, source, target) {
 
 var realGraph = graph();
 realGraph.newNode("HEAD");
-console.log(realGraph.nodes);
-console.log(realGraph.links);
 
 var force = d3.layout.force()
     .charge(-200)
@@ -64,10 +62,6 @@ function addNode(element, source) {
   } else {
     realGraph.newNode(element, source)
   }
-  
-  console.log(realGraph.nodes);
-  console.log(realGraph.nodes[realGraph.nodes.length - 1]);
-  console.log(realGraph.links[realGraph.links.length - 1]);
 
   force.nodes(realGraph.nodes);
   force.links(realGraph.links);
@@ -75,7 +69,6 @@ function addNode(element, source) {
   force.charge(-200)
     .linkDistance(150).start();
 
-  console.log(force.nodes());
 
   svg.selectAll('.link')
     .data(realGraph.links)
@@ -95,7 +88,7 @@ function addNode(element, source) {
     .append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { console.log(d); return d.element + "/" + d.index;});
+      .text(function(d) { return d.element + "/" + d.idx;});
     
 
   force.on("tick", function() {
