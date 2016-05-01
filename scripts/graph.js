@@ -27,6 +27,12 @@ var svg = d3.select(".linkedList").append('svg')
     .enter().append("line")
       .attr("class", "link")
 
+  if (realGraph.weighted)
+    link.append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.weight })
+
   var node = svg.selectAll(".node")
       .data(realGraph.nodes)
     .enter().append("g")
@@ -69,17 +75,33 @@ function addNode(element, source) {
   force.charge(-200)
     .linkDistance(150).start();
 
-
+  if (realGraph.weighted) {
   svg.selectAll('.link')
     .data(realGraph.links)
-     .enter().insert("line", ":first-child")
+     .enter().insert("g", ":first-child")
       .attr("class", "link")
+    .append("line")
 
+    console.log(d3.selectAll(".link"));
+    console.log(d3.selectAll(".link")[0].pop());
+  d3.select(d3.selectAll(".link")[0][0])
+    .append("text")
+      .attr("x", function(d) {
+          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
+          else { return (d.target.x + (d.source.x - d.target.x)/2); }
+      })
+            .attr("y", function(d) {
+          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
+          else { return (d.target.y + (d.source.y - d.target.y)/2); }
+      })
+      .attr("dy", ".35em")
+       .attr("fill", "Maroon")
+      .style("font", "normal 12px Arial")
+      .text(function(d) { return d.weight });
+  }
 
   svg.selectAll('.node')
-    .data(realGraph.nodes, function(d) {
-      console.log("IN D3 MAKE NODE"); console.log(d.idx);
-    return d.idx}) //bandMates, function(d){return d.name;}
+    .data(realGraph.nodes, function(d) { return d.idx }) 
     .enter().append("g")
     .attr("class", "node")
     .call(force.drag)
@@ -94,10 +116,20 @@ function addNode(element, source) {
     
 
   force.on("tick", function() {
-    d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
+    d3.selectAll(".link").select("line").attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
+
+    d3.selectAll(".link").select("text")      
+      .attr("x", function(d) {
+          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
+          else { return (d.target.x + (d.source.x - d.target.x)/2); }
+      })
+      .attr("y", function(d) {
+          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
+          else { return (d.target.y + (d.source.y - d.target.y)/2); }
+      });   
 
     d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });

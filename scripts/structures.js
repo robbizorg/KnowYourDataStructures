@@ -194,7 +194,7 @@ function exampleQ() {
 function graph() {
 	var nodes = [];
 	var links = [];
-	var weighted = false;
+	var weighted = true;
 	// Variable that Keeps track of amount of nodes added overall:
 	var currentCount = 0;
 
@@ -209,10 +209,8 @@ function graph() {
 			}
 		} else {
       if (nodes.length > 1) {
-        if (weighted) {
-          links.push({"source": parseInt(source), "target": (nodes.length - 1), "weight": 0});
-        } else {
-        	// DOES NOT MATCH UP WITH HOW D3 IS DELETING NODES
+
+        	// Find real source in array
         	var realSource = -1;
         	for (node in nodes) {
         		if (nodes[node].idx == source) {
@@ -220,12 +218,15 @@ function graph() {
         			break;
         		} 
         	}
+        	// Return function if nothing found
         	if (realSource < 0)
         		return;
-        	var link = {"source": parseInt(realSource), "target": (nodes.length - 1)};
+        	if (weighted)
+        		var link = {"source": parseInt(realSource), "target": (nodes.length - 1), "weight": Math.round(Math.random()*100)};
+        	else
+        		var link = {"source": parseInt(realSource), "target": (nodes.length - 1)};
       		links.push(link);
-      		nodes[link.source].adjList.push(link.target);
-      	}
+      		nodes[link.source].adjList.push(links[links.length - 1]);
       }
     }
 
@@ -259,9 +260,12 @@ function graph() {
     	if (realTarget < 0 || realSource < 0)
     		return;
 
-    	var link = {"source": parseInt(realSource), "target": parseInt(realTarget)};
+    	if (weighted)
+    		var link = {"source": parseInt(realSource), "target": parseInt(realTarget), "weight": Math.round(Math.random()*100)};
+    	else 
+    		var link = {"source": parseInt(realSource), "target": parseInt(realTarget)};
      	links.push(link);
-     	nodes[link.source].adjList.push(link.target);
+     	nodes[link.source].adjList.push(links[links.length - 1]);
     }
   }
 
@@ -314,7 +318,11 @@ function graph() {
     if (weighted != true) {
       return false;
     } else {
-      return true;
+      for (node in nodes) {
+      	console.log(nodes[node].adjList);
+      	console.log(" ");      	
+      }
+
     }
 
   }
@@ -337,6 +345,8 @@ function graph() {
 		links: links,
 		newNode: newNode,
     	addLink: addLink,
-    	remove: remove
+    	remove: remove,
+    	dijkstras: dijkstras,
+    	weighted: weighted
 	}
 }
