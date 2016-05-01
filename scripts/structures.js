@@ -235,7 +235,31 @@ function graph() {
     if (source === undefined || target === undefined) {
       return undefined;
     } else {
-    	var link = {"source": parseInt(source), "target": parseInt(target)};
+    	// Find Source
+    	var realSource = -1;
+    	for (node in nodes) {
+    		if (nodes[node].idx == source) {
+    			realSource = node;
+    			console.log("YES");
+    			console.log(realSource + " " + source);
+    			break;
+    		}
+    	}
+
+    	// Find Target
+    	var realTarget = -1;
+    	for (node in nodes) {
+    		if (nodes[node].idx == target) {
+    			realTarget = node;
+    			console.log(realTarget + " " + target);
+    			break;
+    		}
+    	}
+
+    	if (realTarget < 0 || realSource < 0)
+    		return;
+
+    	var link = {"source": parseInt(realSource), "target": parseInt(realTarget)};
      	links.push(link);
      	nodes[link.source].adjList.push(link.target);
     }
