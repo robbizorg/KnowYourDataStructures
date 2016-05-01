@@ -195,10 +195,13 @@ function graph() {
 	var nodes = [];
 	var links = [];
 	var weighted = false;
+	// Variable that Keeps track of amount of nodes added overall:
+	var currentCount = 0;
 
 	function newNode(element, source) {
-		var node = {"element": element, "adjList": [], dist: -1, known: false, path: null, idx: nodes.length};
+		var node = {"element": element, "adjList": [], dist: -1, known: false, path: null, idx: currentCount};
 		nodes.push(node);
+		currentCount++;
 
 		if (source === undefined) {
 			if (nodes.length > 1) {

@@ -77,7 +77,9 @@ function addNode(element, source) {
 
 
   svg.selectAll('.node')
-    .data(realGraph.nodes, function(d) {return d.idx}) //bandMates, function(d){return d.name;}
+    .data(realGraph.nodes, function(d) {
+      console.log("IN D3 MAKE NODE"); console.log(d.idx);
+    return d.idx}) //bandMates, function(d){return d.name;}
     .enter().append("g")
     .attr("class", "node")
     .call(force.drag)
