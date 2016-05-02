@@ -76,15 +76,18 @@ function addNode(element, source) {
     .linkDistance(150).start();
 
   if (realGraph.weighted) {
-  svg.selectAll('.link')
+    // CURRENT ISSUE WITH APPENDING NODES
+    // THE WEIGHT APPEARS TO SHIFT OVER ONE SPOT IN THE ARRAY
+    // IT'S EITHER THAT, OR THAT THE GRAPH ITSELF IS ADDING THE 
+    // LINKS INCORRECTLY, OR D3 ACTUALLY PUSHES THE LINK OBJECTS AROUND
+  var newLink = svg.selectAll('.link')
     .data(realGraph.links)
      .enter().insert("g", ":first-child")
-      .attr("class", "link")
+      .attr("class", "link");
+  newLink
     .append("line")
 
-    console.log(d3.selectAll(".link"));
-    console.log(d3.selectAll(".link")[0].pop());
-  d3.select(d3.selectAll(".link")[0][0])
+  newLink
     .append("text")
       .attr("x", function(d) {
           if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
