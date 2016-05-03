@@ -155,19 +155,48 @@ function newLink(source, target) {
 
   force.start();
 
-  svg.selectAll('.link')
-    .data(realGraph.links) 
-    .enter().insert("line", ":first-child")
-      .attr("class", "link");  
+  if (realGraph.weighted) {
+  var newLink = svg.selectAll('.link')
+    .data(realGraph.links)
+     .enter().insert("g", "#separation")
+      .attr("class", "link");
+  newLink
+    .append("line");
+
+  newLink
+    .append("text")
+      .attr("x", function(d) {
+          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
+          else { return (d.target.x + (d.source.x - d.target.x)/2); }
+      })
+            .attr("y", function(d) {
+          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
+          else { return (d.target.y + (d.source.y - d.target.y)/2); }
+      })
+      .attr("dy", ".35em")
+       .attr("fill", "Maroon")
+      .style("font", "normal 12px Arial")
+      .text(function(d) { return d.weight }); 
 
   force.on("tick", function() {
-    d3.selectAll(".link").attr("x1", function(d) { return d.source.x; })
+    d3.selectAll(".link").select("line").attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
 
+    d3.selectAll(".link").select("text")      
+      .attr("x", function(d) {
+          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
+          else { return (d.target.x + (d.source.x - d.target.x)/2); }
+      })
+      .attr("y", function(d) {
+          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
+          else { return (d.target.y + (d.source.y - d.target.y)/2); }
+      });   
+
     d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   });
+}
 }
 
 function remove(source) {
