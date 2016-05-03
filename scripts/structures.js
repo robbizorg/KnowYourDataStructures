@@ -150,12 +150,15 @@ function exampleDD() {
 
 function queue() {
 	var dl = doublyLinkedList();
+	var size = 0;
 
 	function enqueue(element) {
 		dl.insertFront(element);
+		size++;
 	}
 
 	function dequeue() {
+		size--;
 		return dl.removeLast();
 	}
 
@@ -163,11 +166,15 @@ function queue() {
 		return dl.peek();
 	}
 
+	function getSize() {
+		return size;
+	}
+
 	return {
 		enqueue: enqueue,
 		dequeue: dequeue,
 		peek: peek,
-		size: dl.size
+		getSize: getSize
 	}
 }
 
@@ -314,13 +321,42 @@ function graph() {
   }
 
   // Graph Algorithms
-  function dijkstras() {
+  function dijkstras(start) {
     if (weighted != true) {
       return false;
     } else {
+
+      q = queue();
       for (node in nodes) {
-      	console.log(nodes[node].adjList);
-      	console.log(" ");      	
+      	nodes[node].dist = -1;
+      	nodes[node].known = false;
+      	nodes[node].path = null;     	
+      }
+
+      nodes[start].dist = 0;
+      q.enqueue(nodes[start]);
+
+      while (q.getSize() != 0) {
+      	var v = q.dequeue();
+      	v.known = true;
+
+      	for (link in v.adjList) {
+      		console.log(v.adjList[link].target.known);
+      		if (!v.adjList[link].target.known) {
+      			
+      			var cost = v.adjList[link].weight;
+
+      			if (v.dist + cost < v.adjList[link].target.dist) {
+      				v.adjList[link].target.dist = v.dist + cost;
+      				v.adjList[link].target.path = v.adjList[link];
+      				q.enqueue(v.adjList[link].target);
+      			} else if (v.adjList[link].target.dist < 0) {
+      				v.adjList[link].target.dist = v.dist + cost;
+      				v.adjList[link].target.path = v.adjList[link];
+      				q.enqueue(v.adjList[link].target);   				
+      			}
+      		}
+      	}
       }
 
     }
