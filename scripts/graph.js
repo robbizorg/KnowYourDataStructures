@@ -22,9 +22,12 @@ var svg = d3.select(".linkedList").append('svg')
 		.attr("height", 500)
 		.attr("width", 500);
 
+svg.append("g")
+  .attr("id", "separation");
+
   var link = svg.selectAll(".link")
   	.data(realGraph.links)
-    .enter().append("line")
+    .enter().insert("line", "#separation")
       .attr("class", "link")
 
   if (realGraph.weighted)
@@ -72,6 +75,7 @@ function addNode(element, source) {
   force.nodes(realGraph.nodes);
   force.links(realGraph.links);
 
+
   force.charge(-200)
     .linkDistance(150).start();
 
@@ -82,10 +86,10 @@ function addNode(element, source) {
     // LINKS INCORRECTLY, OR D3 ACTUALLY PUSHES THE LINK OBJECTS AROUND
   var newLink = svg.selectAll('.link')
     .data(realGraph.links)
-     .enter().insert("g", ":first-child")
+     .enter().insert("g", "#separation")
       .attr("class", "link");
   newLink
-    .append("line")
+    .append("line");
 
   newLink
     .append("text")
