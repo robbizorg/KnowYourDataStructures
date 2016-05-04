@@ -327,13 +327,27 @@ function graph() {
     }
   }
 
+  function checkKnown() {
+  	for (node in nodes) {
+  		console.log(nodes[node].known);
+  	}
+  	for (node in nodes) {
+  		if (!nodes[node].known) {
+  			console.log("it's false");
+  			return false;
+  		}
+  	}
+  	console.log("Checking CHECK KNOWN AS TRUE");
+  	return true;
+  }
   // Graph Algorithms
   function dijkstras(start) {
     if (weighted != true) {
       return false;
     } else {
 
-      q = queue();
+      //q = queue();
+      // Need to implement Binary Heap for this to work ^^
       for (node in nodes) {
       	nodes[node].dist = -1;
       	nodes[node].known = false;
@@ -341,29 +355,49 @@ function graph() {
       }
 
       nodes[start].dist = 0;
-      q.enqueue(nodes[start]);
+      var q = [];
+      q.push(nodes[start]);
 
-      while (q.getSize() != 0) {
-      	var v = q.dequeue();
+      while (!checkKnown()) {
+      	// Find min vertex distance in array
+      	console.log("Starting Iteration");
+      	var min = -1;
+      	var minIdx = -1;
+      	for (node in q) {
+      		if (min < 0 && !q[node].known) {
+      			min = q[node].dist;
+      			minIdx = node;
+      		} else if (q[node].dist < min && !q[node].known) {
+      			min = q[node].dist;
+      			minIdx = node
+      		}
+      	}
+      	v = q[minIdx];
+      	console.log(v);
+      	console.log("Setting ^^ to known = true");
       	v.known = true;
 
       	for (link in v.adjList) {
+      		console.log("Checking: " + v.adjList[link].target);
       		console.log(v.adjList[link].target.known);
       		if (!v.adjList[link].target.known) {
-      			
+      			console.log(v.adjList[link].target + " is unknown, now in if statement");
       			var cost = v.adjList[link].weight;
 
+      			console.log("Comparing v.dist + cost and v.adj...");
+      			console.log((v.dist + cost) + " " + v.adjList[link].target.dist);
       			if (v.dist + cost < v.adjList[link].target.dist) {
       				v.adjList[link].target.dist = v.dist + cost;
       				v.adjList[link].target.path = v.adjList[link];
-      				q.enqueue(v.adjList[link].target);
+      				q.push(v.adjList[link].target);
       			} else if (v.adjList[link].target.dist < 0) {
       				v.adjList[link].target.dist = v.dist + cost;
       				v.adjList[link].target.path = v.adjList[link];
-      				q.enqueue(v.adjList[link].target);   				
+      				q.push(v.adjList[link].target);   				
       			}
       		}
       	}
+      	console.log("Finished ADj List");
       }
 
     }
