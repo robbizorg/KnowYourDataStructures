@@ -239,7 +239,7 @@ function graph() {
 
   }
   
-  function addLink(source, target) {
+  function addLink(source, target, weight) {
     if (source === undefined || target === undefined) {
       return undefined;
     } else {
@@ -267,10 +267,17 @@ function graph() {
     	if (realTarget < 0 || realSource < 0)
     		return;
 
-    	if (weighted)
-    		var link = {"source": parseInt(realSource), "target": parseInt(realTarget), "weight": Math.round(Math.random()*100)};
-    	else 
+    	if (weighted) {
+    		if (weight !== undefined || weight !== "") {
+    			var link = {"source": parseInt(realSource), "target": parseInt(realTarget), "weight": parseInt(weight)};
+    		}
+    		else {
+    			var link = {"source": parseInt(realSource), "target": parseInt(realTarget), "weight": Math.round(Math.random()*100)};
+    		}
+    	}
+    	else {
     		var link = {"source": parseInt(realSource), "target": parseInt(realTarget)};
+    	}
      	links.push(link);
      	nodes[link.source].adjList.push(links[links.length - 1]);
     }

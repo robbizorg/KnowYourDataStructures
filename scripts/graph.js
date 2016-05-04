@@ -48,7 +48,7 @@ svg.append("g")
   node.append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d.index + "/" + d.idx; });
+      .text(function(d) { return d.element + "/" + d.idx; });
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
@@ -119,7 +119,7 @@ function addNode(element, source) {
     .append("text")
       .attr("dx", 12)
       .attr("dy", ".35em")
-      .text(function(d) { return d.index + "/" + d.idx;});
+      .text(function(d) { return d.element + "/" + d.idx;});
     
 
   force.on("tick", function() {
@@ -142,13 +142,13 @@ function addNode(element, source) {
   });
 };
 
-function newLink(source, target) {
+function newLink(source, target, weight) {
   force.stop();
 
   if (target === "" || source === "") {
     return undefined;  
   } else {
-    realGraph.addLink(source, target);
+    realGraph.addLink(source, target, weight);
   }
   
   force.links(realGraph.links);
@@ -245,8 +245,9 @@ document.getElementById("itemBtn").addEventListener("click", function() {
 document.getElementById("linkBtn").addEventListener("click", function() {
   var source = document.getElementById("source1");
   var target = document.getElementById("target1");
+  var weight = document.getElementById("weight");
   if (source.value != "" && target.value != "") {
-    newLink(source.value, target.value);
+    newLink(source.value, target.value, weight.value);
   }
 });
 
