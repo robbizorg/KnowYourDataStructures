@@ -7,6 +7,7 @@ var pState = "about";
 var aboutBox = document.getElementById("about");
 var costsBox = document.getElementById("costs");
 var applicationsBox = document.getElementById("applications");
+var algorithmsBox = document.getElementById("algorithms");
 
 aboutBox.addEventListener("click", function aboutHandler() {
   if (pState !== "about") {
@@ -26,5 +27,12 @@ applicationsBox.addEventListener("click", function aboutHandler() {
   if (pState !== "applications") {
     pState = "applications";
     p.innerHTML = applications;
+  }
+});
+
+algorithmsBox.addEventListener("click", function aboutHandler() {
+  if (pState !== "algorithms") {
+    pState = "algorithms";
+    p.innerHTML = algorithms;
   }
 });

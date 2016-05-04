@@ -274,7 +274,23 @@ var costs = "Costs of graphs, unlike data structures, do not rely on N elements,
 "It's important to know the difference between the two. The math works out such that |E| (Magnitude of Set E, " +
 "a.k.a. the number of edges in the set E) can end up resulting in either costs of O(|V|) or O(|V|<sup>2</sup>).";
 
-var algorithms = "Dijkstras, Topological Sort, Minimum Spanning Trees";
+var algorithms = "<div class='algCon'><h3>Dijkstras</h3>" + 
+"     <div class='row' id='text'>" +
+        "<h4>Find Distance between two Nodes</h4>" + 
+        "<input id='distSource' type='text' placeholder='Source'>&nbsp" +
+        "<input id='distTarget' type='text' placeholder='Target'>&nbsp" +
+        "<button class='btn' id='distBtn'>Find Distance</button>" +
+     "</div>" + 
+"<p>Where to even beigin with this amazing algorithm. Dojkstra's finds the shortest " +
+"distance between two points in a, dare I say, greedy way. In the beginning, the algorithm " +
+"first sets all nodes' known fields to false, their previous or path fields to null, and their distance fields " +
+"to infinity (or in our case a negative number).</p><p>Then starting at a specified node, the algorithm sets the current " +
+"node's known field to true, looks at all the adjacent nodes, and then sets their distance fields to the distance between " +
+"the current node and themselves. After the distance, the algorithm then sets their path field to the current node. " +
+"The next unknown node that is the shortest distance away is then the one that is selected next, and the process repeats itself " +
+"until all nodes are known.</p>" + 
+
+"<h3>Topological Sort</h3><h3>Minimum Spanning Trees</h3></div>";
 
 
 

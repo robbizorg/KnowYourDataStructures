@@ -279,7 +279,7 @@ function graph() {
     		var link = {"source": parseInt(realSource), "target": parseInt(realTarget)};
     	}
      	links.push(link);
-     	nodes[link.source].adjList.push(links[links.length - 1]);
+     	nodes[link.source].adjList.push(link);
     }
   }
 
