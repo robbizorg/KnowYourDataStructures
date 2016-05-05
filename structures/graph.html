@@ -19,10 +19,17 @@
 		.tab {
 			display: inline-block;
 			float: left;
-			border: 1px black solid;
 			padding: 5px 10px 5px 10px;
 			margin: 5px;
 			cursor: pointer;
+			color: black;
+			border-radius: 2.5px;
+		}
+
+		.tab:hover {
+			color: white;
+			background-color: black;
+
 		}
 
 		.marker {
@@ -66,7 +73,7 @@
 <body>
 <div class="container">
 	<br>
-	<div class="info col-md-6" style="border: 1px solid black;">
+	<div class="info col-md-6">
 		<div class="row">
 			<div class="tab" id="about">About</div>
 			<div class="tab" id="costs">Costs</div>
