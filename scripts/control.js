@@ -47,12 +47,14 @@ algorithmsBox.addEventListener("click", function aboutHandler() {
 
     var distHelp = document.getElementById("distBtn2");
     distHelp.addEventListener("click", function distHelpHandler() {
+      $(".dijkHead").remove();
+      $("#dijkTable").remove();
       var source = document.getElementById("distSource2").value;
       var target = document.getElementById("distTarget2").value;
       var tableArr = doDijkstras(source, target);
       var currentStep = 0;
 
-      $(".helpDist").append("<div class='row' id='steps'><h4>Find Distance between Two Nodes (with Steps and Table)</h4>" + 
+      $(".helpDist").append("<div class='row dijkHead' id='steps'><h4>Results: </h4>" + 
         "<button class='btn' id='prevStep'>Previous Step</button>" +
         "<button class='btn' id='nextStep'>Next Step</button>" +
      "</div>");
