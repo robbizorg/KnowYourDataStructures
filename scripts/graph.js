@@ -233,6 +233,22 @@ function remove(source) {
   });
 }
 
+function getDijkstras(source, target) {
+  var path = realGraph.getDijkstras(parseInt(source), parseInt(target));
+
+  svg.selectAll('.link')
+    .attr("class", function(d) {
+      for (link in path) {
+        if (path[link] == d) {
+          return "link linkSelected";
+        } 
+      }
+      return "link";
+    });
+
+  return path;
+}
+
 document.getElementById("itemBtn").addEventListener("click", function() {
   var source = document.getElementById("source");
   if (source.value == "") {
@@ -276,12 +292,12 @@ var costs = "Costs of graphs, unlike data structures, do not rely on N elements,
 
 var algorithms = "<div class='algCon'><h3>Dijkstras</h3>" + 
 "     <div class='row' id='text'>" +
-        "<h4>Find Distance between two Nodes</h4>" + 
+        "<h4>Find Distance between Two Nodes</h4>" + 
         "<input id='distSource' type='text' placeholder='Source'>&nbsp" +
         "<input id='distTarget' type='text' placeholder='Target'>&nbsp" +
         "<button class='btn' id='distBtn'>Find Distance</button>" +
      "</div>" + 
-"<p>Where to even beigin with this amazing algorithm. Dojkstra's finds the shortest " +
+"<p>Where to even beigin with this amazing algorithm. Dijkstra's finds the shortest " +
 "distance between two points in a, dare I say, greedy way. In the beginning, the algorithm " +
 "first sets all nodes' known fields to false, their previous or path fields to null, and their distance fields " +
 "to infinity (or in our case a negative number).</p><p>Then starting at a specified node, the algorithm sets the current " +

@@ -340,6 +340,7 @@ function graph() {
   	console.log("Checking CHECK KNOWN AS TRUE");
   	return true;
   }
+
   // Graph Algorithms
   function dijkstras(start) {
     if (weighted != true) {
@@ -404,6 +405,43 @@ function graph() {
 
   }
 
+  function getDijkstras(source, target) {
+  	// Don't Call Dijkstra's on Empty Array
+  	if (nodes.length < 2)
+  		return false;
+  	// Run Dijkstra's, generate path object
+
+  	// find real Source and Target
+
+    var indexSource = source;
+    var indexTarget = target;
+    var source = -1;
+    var target = -1;
+
+    // Find the Actual Node Index
+    for (node in nodes) {
+      if (nodes[node].idx == indexSource)
+      	source = parseInt(node);
+      if (nodes[node].idx == indexTarget)
+      	target = parseInt(node);
+    }
+    if (source < 0 || target < 0)
+      return;
+
+  	dijkstras(source);
+  	path = [];
+  	currentVertex = nodes[target];
+  	path.dist = currentVertex.dist;
+
+  	// Recontruct path
+  	while (currentVertex.path != null) {
+  		path.push(currentVertex.path);
+  		currentVertex = currentVertex.path.source;
+  	}
+
+  	return path;
+  }
+
   function shortestPathUnweighted() {
     
   }
@@ -424,6 +462,7 @@ function graph() {
     	addLink: addLink,
     	remove: remove,
     	dijkstras: dijkstras,
+    	getDijkstras: getDijkstras,
     	weighted: weighted
 	}
 }
