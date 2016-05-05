@@ -274,7 +274,46 @@ document.getElementById("removeBtn").addEventListener("click", function() {
   }
 });
 
+function constructTable(nodes) {
+  var str = "";
+  str += '<table style="width:100%"><tr><th>Nodes</th><th>Known</th><th>Distance</th><th>Path</th></tr>';
+  for (node in nodes) {
+    if (nodes[node].dist < 0)
+      var dist = "Infinity";
+    str += '<tr><td>' + nodes[node].idx + '</td><td>' + nodes[node].known + '</td><td>' + dist + '</td><td>' + nodes[node].path + '</td></tr>';
+  }
 
+  return str;
+}
+function doDijkstras(start, target) {
+  if (!realGraph.weighted) {
+    return false;
+  }
+
+  // Reset all the Nodes
+  for (node in realGraph.nodes) {
+    realGraph.nodes[node].dist = -1;
+    realGraph.nodes[node].known = false;
+    realGraph.nodes[node].path = null;
+  }
+
+  // html Strings to be returned
+  htmlStrings = [];
+  htmlStrings.push(constructTable(realGraph.nodes));
+/*
+  nodes[start].dist = 0;
+  var q = [];
+  q.push(nodes[start]);
+
+  while (!realGraph.checkKnown()) {
+
+  }
+*/
+  
+  return htmlStrings;
+}
+
+// Example Table String '<table style="width:100%"><tr><th>First</th><th>Last</th><th>Age</th></tr><tr><td>Jill</td><td>Smith</td> <td>50</td></tr><tr><td>Eve</td><td>Jackson</td> <td>94</td></tr></table>' +
 // HTML TEXT
 var about = "Of all the data structures, graphs are my favorite. Disregarding the mathematical " +
  "rabbit holes that you can find yourself in when you're studying graphs, they can be used to represent " +
@@ -291,11 +330,17 @@ var costs = "Costs of graphs, unlike data structures, do not rely on N elements,
 "a.k.a. the number of edges in the set E) can end up resulting in either costs of O(|V|) or O(|V|<sup>2</sup>).";
 
 var algorithms = "<div class='algCon'><h3>Dijkstras</h3>" + 
-"     <div class='row' id='text'>" +
+"     <div class='row regDist' id='text3'>" +
         "<h4>Find Distance between Two Nodes</h4>" + 
         "<input id='distSource' type='text' placeholder='Source'>&nbsp" +
         "<input id='distTarget' type='text' placeholder='Target'>&nbsp" +
         "<button class='btn' id='distBtn'>Find Distance</button>" +
+     "</div>" + 
+"     <div class='row helpDist' id='text2'>" +
+        "<h4>Find Distance between Two Nodes (with Steps and Table)</h4>" + 
+        "<input id='distSource2' type='text' placeholder='Source'>&nbsp" +
+        "<input id='distTarget2' type='text' placeholder='Target'>&nbsp" +
+        "<button class='btn' id='distBtn2'>Find Distance</button>" +
      "</div>" + 
 "<p>Where to even beigin with this amazing algorithm. Dijkstra's finds the shortest " +
 "distance between two points in a, dare I say, greedy way. In the beginning, the algorithm " +

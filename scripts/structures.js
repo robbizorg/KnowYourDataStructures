@@ -463,6 +463,7 @@ function graph() {
     	remove: remove,
     	dijkstras: dijkstras,
     	getDijkstras: getDijkstras,
-    	weighted: weighted
+    	weighted: weighted,
+    	checkKnown: checkKnown
 	}
 }
