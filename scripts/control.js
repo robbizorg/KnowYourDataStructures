@@ -50,8 +50,29 @@ algorithmsBox.addEventListener("click", function aboutHandler() {
       var source = document.getElementById("distSource2").value;
       var target = document.getElementById("distTarget2").value;
       var tableArr = doDijkstras(source, target);
+      var currentStep = 0;
 
-      $(".helpDist").append(tableArr[0]);
+      $(".helpDist").append("<div class='row' id='steps'><h4>Find Distance between Two Nodes (with Steps and Table)</h4>" + 
+        "<button class='btn' id='prevStep'>Previous Step</button>" +
+        "<button class='btn' id='nextStep'>Next Step</button>" +
+     "</div>");
+      $(".helpDist").append(tableArr[currentStep]);
+
+      var prev = document.getElementById("prevStep");
+      prev.addEventListener("click", function prevHandler() {
+        if (currentStep != 0) {
+          $("#dijkTable").remove();
+          $(".helpDist").append(tableArr[--currentStep]);
+        }
+      });
+
+      var next = document.getElementById("nextStep"); 
+      next.addEventListener("click", function nextHandler() {
+        if (currentStep != (tableArr.length - 1)) {
+          $("#dijkTable").remove();
+          $(".helpDist").append(tableArr[++currentStep]);
+        }
+      });
     });
   }
 });

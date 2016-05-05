@@ -276,11 +276,19 @@ document.getElementById("removeBtn").addEventListener("click", function() {
 
 function constructTable(nodes) {
   var str = "";
-  str += '<table style="width:100%"><tr><th>Nodes</th><th>Known</th><th>Distance</th><th>Path</th></tr>';
+  str += '<table id="dijkTable" style="width:100%"><tr><th>Nodes</th><th>Known</th><th>Distance</th><th>Path</th></tr>';
   for (node in nodes) {
-    if (nodes[node].dist < 0)
+    if (nodes[node].dist < 0) {
       var dist = "Infinity";
-    str += '<tr><td>' + nodes[node].idx + '</td><td>' + nodes[node].known + '</td><td>' + dist + '</td><td>' + nodes[node].path + '</td></tr>';
+    } else {
+      var dist = nodes[node].dist;
+    }
+    if (nodes[node].path !== null) {
+      var path = nodes[node].path.source.idx;
+    } else {
+      var path = nodes[node].path;
+    }
+    str += '<tr><td>' + nodes[node].idx + '</td><td>' + nodes[node].known + '</td><td>' + dist + '</td><td>' + path + '</td></tr>';
   }
 
   return str;
@@ -300,15 +308,45 @@ function doDijkstras(start, target) {
   // html Strings to be returned
   htmlStrings = [];
   htmlStrings.push(constructTable(realGraph.nodes));
-/*
-  nodes[start].dist = 0;
+
+  realGraph.nodes[start].dist = 0;
   var q = [];
-  q.push(nodes[start]);
+  q.push(realGraph.nodes[start]);
 
   while (!realGraph.checkKnown()) {
+    // Find min distance of unknown vertex and set v.known to true
+    var min = -1;
+    var minIdx = -1;
+    for (node in q) {
+      if (min < 0 && !q[node].known) {
+        min = q[node].dist;
+        minIdx = node;
+      } else if (q[node].dist < min && !q[node].known) {
+        min = q[node].dist;
+        minIdx = node
+      }
+    }
+    v = q[minIdx];
+    v.known = true;
 
+    for (link in v.adjList) {
+      if (!v.adjList[link].target.known) {
+        var cost = v.adjList[link].weight;
+
+        if (v.dist + cost < v.adjList[link].target.dist) {
+          v.adjList[link].target.dist = v.dist + cost;
+          v.adjList[link].target.path = v.adjList[link];
+          q.push(v.adjList[link].target);
+        } else if (v.adjList[link].target.dist < 0) {
+          v.adjList[link].target.dist = v.dist + cost;
+          v.adjList[link].target.path = v.adjList[link];
+          q.push(v.adjList[link].target);           
+        }
+      }
+    }
+    htmlStrings.push(constructTable(realGraph.nodes));
   }
-*/
+  console.log(htmlStrings);
   
   return htmlStrings;
 }
