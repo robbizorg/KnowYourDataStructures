@@ -313,7 +313,7 @@ function doDijkstras(start, target) {
   var q = [];
   q.push(realGraph.nodes[start]);
 
-  while (!realGraph.checkKnown()) {
+  while (!realGraph.checkKnown(q)) {
     // Find min distance of unknown vertex and set v.known to true
     var min = -1;
     var minIdx = -1;

@@ -327,12 +327,13 @@ function graph() {
     }
   }
 
-  function checkKnown() {
+  function checkKnown(nodes) {
   	for (node in nodes) {
   		console.log(nodes[node].known);
   	}
   	for (node in nodes) {
   		if (!nodes[node].known) {
+  			console.log(nodes[node]);
   			console.log("it's false");
   			return false;
   		}
@@ -359,7 +360,7 @@ function graph() {
       var q = [];
       q.push(nodes[start]);
 
-      while (!checkKnown()) {
+      while (!checkKnown(q)) {
       	// Find min vertex distance in array
       	console.log("Starting Iteration");
       	var min = -1;
@@ -373,6 +374,8 @@ function graph() {
       			minIdx = node
       		}
       	}
+      	console.log(minIdx);
+      	console.log(q);
       	v = q[minIdx];
       	console.log(v);
       	console.log("Setting ^^ to known = true");
