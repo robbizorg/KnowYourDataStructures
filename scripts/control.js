@@ -30,6 +30,7 @@ applicationsBox.addEventListener("click", function aboutHandler() {
   }
 });
 
+if ($(document).find("title").text() == "Graph") {
 algorithmsBox.addEventListener("click", function aboutHandler() {
   if (pState !== "algorithms") {
     pState = "algorithms";
@@ -78,3 +79,4 @@ algorithmsBox.addEventListener("click", function aboutHandler() {
     });
   }
 });
+}
