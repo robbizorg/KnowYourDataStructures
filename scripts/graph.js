@@ -25,10 +25,38 @@ var svg = d3.select(".linkedList").append('svg')
 svg.append("g")
   .attr("id", "separation");
 
+svg.append("svg:defs").selectAll("marker")
+    .data(["end"])      // Different link/path types can be defined here
+  .enter().append("svg:marker")    // This section adds in the arrows
+    .attr("id", String)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 26)
+    .attr("refY", 0)
+    .attr("markerWidth", 20)
+    .attr("markerHeight", 20)
+    .attr("orient", "auto")
+  .append("svg:path")
+    .attr("d", "M0,-5L10,0L0,5");
+
+svg.append("svg:defs").selectAll("marker")
+    .data(["endSel"])      // Different link/path types can be defined here
+  .enter().append("svg:marker")    // This section adds in the arrows
+    .attr("id", String)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 26)
+    .attr("refY", 0)
+    .attr("markerWidth", 20)
+    .attr("markerHeight", 20)
+    .attr("orient", "auto")
+    .attr("fill", "#40ff00")
+  .append("svg:path")
+    .attr("d", "M0,-5L10,0L0,5");
+
   var link = svg.selectAll(".link")
   	.data(realGraph.links)
     .enter().insert("line", "#separation")
       .attr("class", "link")
+      .attr("marker-end", "url(#end)");
 
   if (realGraph.weighted)
     link.append("text")
@@ -84,10 +112,13 @@ function addNode(element, source) {
     // THE WEIGHT APPEARS TO SHIFT OVER ONE SPOT IN THE ARRAY
     // IT'S EITHER THAT, OR THAT THE GRAPH ITSELF IS ADDING THE 
     // LINKS INCORRECTLY, OR D3 ACTUALLY PUSHES THE LINK OBJECTS AROUND
+
   var newLink = svg.selectAll('.link')
     .data(realGraph.links)
      .enter().insert("g", "#separation")
-      .attr("class", "link");
+      .attr("class", "link")
+      .attr("marker-end", "url(#end)");
+
   newLink
     .append("line");
 
@@ -159,7 +190,8 @@ function newLink(source, target, weight) {
   var newLink = svg.selectAll('.link')
     .data(realGraph.links)
      .enter().insert("g", "#separation")
-      .attr("class", "link");
+      .attr("class", "link")
+      .attr("marker-end", "url(#end)");
   newLink
     .append("line");
 
@@ -244,6 +276,14 @@ function getDijkstras(source, target) {
         } 
       }
       return "link";
+    })
+    .attr("marker-end", function(d) {
+      for (link in path) {
+        if (path[link] == d) {
+          return "url(#endSel)";
+        }
+      }
+      return "url(#end)";
     });
 
   return path;
