@@ -1,9 +1,53 @@
-function mergeSort() {
+function pmergeSort(a, tmpArr, left, right) {
 	// Steps will be a 2D array where the second dimension contains
 	// two objects, the first table of the items and then the second
 	// table of the merges
 	// ex: [[table1,table2],[table1.2,table2.2]]
 	var steps = [];
+	if (left < right) {
+		var center = Math.floor((left + right) / 2);
+		pmergeSort(a, tmpArr, left, center);
+		pmergeSort(a, tmpArr, center + 1, right);
+		merge(a, tmpArr, left, center + 1, right);
+	}
+}
+
+function mergeSort(arr) {
+	var tmpArr = [];
+	console.log("Pre Sorting");
+	console.log(arr);
+	pmergeSort(arr, tmpArr, 0, arr.length - 1);
+	console.log("Post Sorting");
+	console.log(arr);
+}
+
+// merge Routine, helper to mergeSort()
+function merge(a, tmpArr, left, right, rightEnd) {
+	var leftEnd = right - 1;
+	var tmpPos = left;
+	var elements = rightEnd - left + 1;
+
+	while (left <= leftEnd && right <= rightEnd) {
+		if (a[left] < a[right]) {
+			tmpArr[tmpPos++] = a[left++];
+		} else {
+			tmpArr[tmpPos++] = a[right++]; 
+		}
+	}
+
+	// Got to copy over all the other elements
+	while (left <= leftEnd) {
+		tmpArr[tmpPos++] = a[left++];
+	}
+
+	while (right <= rightEnd) {
+		tmpArr[tmpPos++] = a[right++];
+	}
+
+	// Copy the temp array back to a
+	for (var i = 0; i< elements; i++, rightEnd--) {
+		a[rightEnd] = tmpArr[rightEnd];
+	}
 }
 
 function quickSort() {
