@@ -105,7 +105,7 @@ function addNode(element, source) {
 
 
   force.charge(-200)
-    .linkDistance(150).start();
+    .linkDistance(150)z.start();
 
   if (realGraph.weighted) {
     // CURRENT ISSUE WITH APPENDING NODES

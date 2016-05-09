@@ -22,8 +22,6 @@ function mergeSort(arr) {
 
 	pmergeSort(arr, tmpArr, 0, arr.length - 1, steps);
 	
-	console.log("Post Sorting");
-	console.log(arr);
 	steps.push(mergeConstructTable(arr, tmpArr));
 	return steps;
 }
