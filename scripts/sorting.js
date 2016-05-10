@@ -126,4 +126,9 @@ var about = "<h3>Sorting</h3><p>Everybody's gotta learn it, even if you're never
 var applications = "<h3>Applications of Sorting</h3><p>We use sorting algorithms to, well, sort things. The object of this game is to " +
 "sort things as fast as possible. Points go to the ones who can figure out how to do it the best. "
 
-var costs = "<h3>Costs of Sorting</h3><p>Oh God, we'll get to this one later...</p>";
+var costs = "<h3>Costs of Sorting</h3><p>Sorting is one of those problems that you can only solve so well. Through a well made and" + 
+ "complicated proof that I won't get into here, sorting can be shown to have a lower bound of O(nlogn). That means that no matter how " +
+ "long you try to come up with a new sorting algorithm, you can never do better than O(nlogn).</p>" + 
+ "<p>But that's ok, because O(nlogn) is good enough for us. Our best sorting algorithms, Quick Sort, Merge Sort, Heap Sort, etc., all " +
+ "hit that much needed lower bound. Other algorithms, however, do not perform as well. Things like Selection Sort and Bubble Sort instead have " +
+ "a run time of O(n^2)</p>;
