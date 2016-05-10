@@ -105,7 +105,7 @@ function addNode(element, source) {
 
 
   force.charge(-200)
-    .linkDistance(150)z.start();
+    .linkDistance(150).start();
 
   if (realGraph.weighted) {
     // CURRENT ISSUE WITH APPENDING NODES
@@ -289,6 +289,16 @@ function getDijkstras(source, target) {
   return path;
 }
 
+function exampleGraph() {
+  force.stop();
+  
+  realGraph.reset();
+  force.nodes(realGraph.nodes);
+  force.links(realGraph.links);
+
+
+}
+
 document.getElementById("itemBtn").addEventListener("click", function() {
   var source = document.getElementById("source");
   if (source.value == "") {
@@ -313,6 +323,10 @@ document.getElementById("removeBtn").addEventListener("click", function() {
     remove(removeVal.value);
   }
 });
+
+document.getElementById("exBtn").addEventListener("click", function() {
+  exampleGraph();
+}
 
 function constructTable(nodes) {
   var str = "";
@@ -407,7 +421,8 @@ var costs = "Costs of graphs, unlike data structures, do not rely on N elements,
 "It's important to know the difference between the two. The math works out such that |E| (Magnitude of Set E, " +
 "a.k.a. the number of edges in the set E) can end up resulting in either costs of O(|V|) or O(|V|<sup>2</sup>).";
 
-var algorithms = "<div class='algCon'><h3>Dijkstras</h3>" + 
+var algorithms = "<div class='algCon'>" +
+"<h3>Dijkstras</h3>" + 
 "     <div class='row regDist' id='text3'>" +
         "<h4>Find Distance between Two Nodes</h4>" + 
         "<input id='distSource' type='text' placeholder='Source'>&nbsp" +

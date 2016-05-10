@@ -456,6 +456,11 @@ function graph() {
   function mst() {
 
   }
+
+  function reset() {
+  	nodes = [];
+  	links = [];
+  }
 	
 
 	return {
@@ -467,6 +472,7 @@ function graph() {
     	dijkstras: dijkstras,
     	getDijkstras: getDijkstras,
     	weighted: weighted,
-    	checkKnown: checkKnown
+    	checkKnown: checkKnown,
+    	reset: reset
 	}
 }
