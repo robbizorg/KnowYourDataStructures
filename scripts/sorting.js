@@ -131,4 +131,4 @@ var costs = "<h3>Costs of Sorting</h3><p>Sorting is one of those problems that y
  "long you try to come up with a new sorting algorithm, you can never do better than O(nlogn).</p>" + 
  "<p>But that's ok, because O(nlogn) is good enough for us. Our best sorting algorithms, Quick Sort, Merge Sort, Heap Sort, etc., all " +
  "hit that much needed lower bound. Other algorithms, however, do not perform as well. Things like Selection Sort and Bubble Sort instead have " +
- "a run time of O(n^2)</p>;
+ "a run time of O(n^2)</p>";
