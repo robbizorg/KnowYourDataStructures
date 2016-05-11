@@ -296,6 +296,11 @@ function exampleGraph() {
   force.nodes(realGraph.nodes);
   force.links(realGraph.links);
 
+  realGraph.newNode("New York");
+  realGraph.newNode("Las Vegas", 0);
+
+  force.nodes(realGraph.nodes);
+  force.links(realGraph.links);
 
 }
 
