@@ -291,74 +291,23 @@ function getDijkstras(source, target) {
 
 function exampleGraph() {
   force.stop();
-  
+  console.log(realGraph.nodes);
+
   realGraph.reset();
-  force.nodes(realGraph.nodes);
-  force.links(realGraph.links);
 
-  realGraph.newNode("New York");
-  realGraph.newNode("Las Vegas");
-  realGraph.newNode("Los Angeles");
-  realGraph.newNode("Vancouver")
+  console.log(realGraph.nodes);
 
-  force.nodes(realGraph.nodes);
-  force.links(realGraph.links);
+  svg.selectAll(".node").data(realGraph.nodes).exit().remove();
+  svg.selectAll(".link").data(realGraph.links).exit().remove();
 
-  var node = svg.selectAll(".node")
-      .data(realGraph.nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .call(force.drag);
+  addNode("New York");
+  addNode("Las Vegas");
+  addNode("Los Angeles");
+  addNode("Vancouver");
+  addNode("Tokyo");
+  addNode("London");
+  addNode("São Paulo");
 
-  node.append("circle")
-    .attr('r', 10);
-
-  node.append("text")
-      .attr("dx", 12)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.element + "/" + d.idx; });
-    
-  var newLink = svg.selectAll('.link')
-    .data(realGraph.links)
-     .enter().insert("g", "#separation")
-      .attr("class", "link")
-      .attr("marker-end", "url(#end)");
-  newLink
-    .append("line");
-
-  newLink
-    .append("text")
-      .attr("x", function(d) {
-          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
-          else { return (d.target.x + (d.source.x - d.target.x)/2); }
-      })
-            .attr("y", function(d) {
-          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
-          else { return (d.target.y + (d.source.y - d.target.y)/2); }
-      })
-      .attr("dy", ".35em")
-       .attr("fill", "Maroon")
-      .style("font", "normal 12px Arial")
-      .text(function(d) { return d.weight }); 
-
-  force.on("tick", function() {
-    d3.selectAll(".link").select("line").attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
-
-    d3.selectAll(".link").select("text")      
-      .attr("x", function(d) {
-          if (d.target.x > d.source.x) { return (d.source.x + (d.target.x - d.source.x)/2); }
-          else { return (d.target.x + (d.source.x - d.target.x)/2); }
-      })
-      .attr("y", function(d) {
-          if (d.target.y > d.source.y) { return (d.source.y + (d.target.y - d.source.y)/2); }
-          else { return (d.target.y + (d.source.y - d.target.y)/2); }
-      });   
-
-    d3.selectAll('.node').attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  });
 }
 
 document.getElementById("itemBtn").addEventListener("click", function() {

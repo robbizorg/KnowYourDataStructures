@@ -458,13 +458,17 @@ function graph() {
   }
 
   function reset() {
-  	nodes = [];
-  	links = [];
+  	nodes.splice(0, nodes.length);
+  	links.splice(0, links.length);
   }
 	
+  function getNodes() {
+  	return nodes;
+  }
 
 	return {
 		nodes: nodes,
+		getNodes: getNodes,
 		links: links,
 		newNode: newNode,
     	addLink: addLink,
