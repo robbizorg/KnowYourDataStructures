@@ -460,6 +460,7 @@ function graph() {
   function reset() {
   	nodes.splice(0, nodes.length);
   	links.splice(0, links.length);
+  	currentCount = 0;
   }
 	
   function getNodes() {

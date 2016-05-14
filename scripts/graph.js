@@ -308,6 +308,35 @@ function exampleGraph() {
   addNode("London");
   addNode("São Paulo");
 
+  // New York Links
+  newLink(0, 1, 300);
+  newLink(0, 2, 500);
+  newLink(0, 3, 700);
+  newLink(0, 4, 2000);
+  newLink(0, 5, 300);
+  newLink(0, 6, 1200);
+
+  // Las Vegas Links
+  newLink(1, 2, 100);
+  newLink(1, 3, 300);
+  newLink(1, 4, 1000);
+  newLink(1, 5, 1500);
+  newLink(1, 6, 1000);
+
+  // Los Angeles Links
+  newLink(2, 3, 400);
+  newLink(2, 4, 800);
+  newLink(2, 5, 1800);
+  newLink(2, 6, 1000);
+
+  // Vancouver
+  newLink(3, 4, 800);
+  newLink(3, 5, 1800);
+  newLink(3, 6, 2000);
+
+  // Tokyo
+  newLink(4, 5, 1000);
+  newLink(5, 6, 1000);
 }
 
 document.getElementById("itemBtn").addEventListener("click", function() {
