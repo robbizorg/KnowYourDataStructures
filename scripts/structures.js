@@ -453,8 +453,69 @@ function graph() {
 
   }
 
-  function mst() {
+  function mst(start) {
+  	// Using Prim's to Implement MST
+    if (weighted != true) {
+      return false;
+    } else {
 
+      //q = queue();
+      // Need to implement Binary Heap for this to work ^^
+      for (node in nodes) {
+      	nodes[node].dist = -1;
+      	nodes[node].known = false;
+      	nodes[node].path = null;     	
+      }
+
+      nodes[start].dist = 0;
+      var q = [];
+      q.push(nodes[start]);
+
+      while (!checkKnown(q)) {
+      	// Find min vertex distance in array
+      	console.log("Starting Iteration");
+      	var min = -1;
+      	var minIdx = -1;
+      	for (node in q) {
+      		if (min < 0 && !q[node].known) {
+      			min = q[node].dist;
+      			minIdx = node;
+      		} else if (q[node].dist < min && !q[node].known) {
+      			min = q[node].dist;
+      			minIdx = node;
+      		}
+      	}
+      	console.log(minIdx);
+      	console.log(q);
+      	v = q[minIdx];
+      	console.log(v);
+      	console.log("Setting ^^ to known = true");
+      	v.known = true;
+
+      	for (link in v.adjList) {
+      		console.log("Checking: " + v.adjList[link].target);
+      		console.log(v.adjList[link].target.known);
+      		if (!v.adjList[link].target.known) {
+      			console.log(v.adjList[link].target + " is unknown, now in if statement");
+      			var cost = v.adjList[link].weight;
+
+      			console.log("Comparing cost and v.adj...");
+      			console.log((v.dist) + " " + v.adjList[link].target.dist);
+      			if (cost < v.adjList[link].target.dist) {
+      				v.adjList[link].target.dist = cost;
+      				v.adjList[link].target.path = v.adjList[link];
+      				q.push(v.adjList[link].target);
+      			} else if (v.adjList[link].target.dist < 0) {
+      				v.adjList[link].target.dist = cost;
+      				v.adjList[link].target.path = v.adjList[link];
+      				q.push(v.adjList[link].target);   				
+      			}
+      		}
+      	}
+      	console.log("Finished ADj List");
+      }
+
+    }
   }
 
   function reset() {
@@ -478,6 +539,7 @@ function graph() {
     	getDijkstras: getDijkstras,
     	weighted: weighted,
     	checkKnown: checkKnown,
+    	mst: mst,
     	reset: reset
 	}
 }
